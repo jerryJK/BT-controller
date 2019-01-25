@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-import { AppContainer } from './App.s';
+import { AppContainer, ControlWrapper, ControlPanel, Title } from './App.s';
+import { RangeComponent } from '../components/RangeController/RangeController';
+
 
 class App extends Component {
   render() {
     return (
       <AppContainer>
-      	<p>BT controller</p>
+        <Title>Lego Controller</Title>
+        <ControlWrapper>
+          <RangeComponent/>
+          <RangeComponent/>
+        </ControlWrapper>
       </AppContainer>
     );
   }
