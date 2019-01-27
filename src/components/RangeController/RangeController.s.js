@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const ControllerWrapper = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   display: flex;
   justify-content: center;
 `
@@ -17,11 +17,11 @@ export const Controller = styled.input`
   background: transparent;
   font-size: 1em;
   cursor: pointer;
-  -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+  -webkit-appearance: none;
   background: transparent;
 
     &:focus {
-      outline: none; /* Removes the blue border. */
+      outline: none;
     }
 
     &::-webkit-slider-thumb {
@@ -32,8 +32,8 @@ export const Controller = styled.input`
       border-radius: 50%;
       background: #ffffff;
       cursor: pointer;
-      margin-top: -14px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-      box-shadow: 0px 1px 3px #000000, 0px 0px 0px #0d0d0d; /* Add cool effects to your sliders! */
+      margin-top: -14px;
+      box-shadow: 0px 1px 3px #000000, 0px 0px 0px #0d0d0d;
     }
 
     &::-webkit-slider-runnable-track {
@@ -43,6 +43,7 @@ export const Controller = styled.input`
       background: grey;
       border-radius: 10px;
       border: 0.4px solid #010101;
+
     }
   
 `

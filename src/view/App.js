@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { AppContainer, ControlWrapper, ControlPanel, Title } from './App.s';
 import { RangeComponent } from '../components/RangeController/RangeController';
 
-
 class App extends Component {
   render() {
     return (
