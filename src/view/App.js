@@ -9,19 +9,54 @@ import LightsIcon from '@material-ui/icons/WbSunny';
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      connected: false,
+      fullScreen: false,
+      lightsOn: false
+    }
+  }
+
+  getBluetoothButton = () => {
+    return this.state.connected ? <BluetoothConnectedIcon /> : <BluetoothIcon />
+  }
+
+  getFullScrennButton = () => {
+    return this.state.fullScreen ?  <FullScreenExitIcon /> : <FullScreenIcon />
+  }
+
+  handleBluetoothButtonClick = () => {
+    this.setState({connected: !this.state.connected})
+  }
+
+  handleFullScreenButtonClick = () => {
+    this.setState({fullScreen: !this.state.fullScreen})
+  }
+
+  handleLightsButtonClick = () => {
+    this.setState({lightsOn: !this.state.lightsOn})
+  }
+
   render() {
     return (
       <AppContainer>
         <Header>
-          <BluetoothIconButton>
-            <BluetoothIcon/>
+          <BluetoothIconButton 
+            connected={this.state.connected} 
+            onClick={() => this.handleBluetoothButtonClick()} >
+            { this.getBluetoothButton() }
           </BluetoothIconButton>
           <Title>Lego Controller</Title>
-          <FullScreenIconButton>
-            <FullScreenIcon/>
+          <FullScreenIconButton 
+            onClick={() => this.handleFullScreenButtonClick()}>
+            { this.getFullScrennButton() }
           </FullScreenIconButton>
         </Header>
-        <LightsIconButton>
+        <LightsIconButton 
+          lightsOn={this.state.lightsOn} 
+          onClick={() => this.handleLightsButtonClick()}>
           <LightsIcon fontSize="medium"  />
         </LightsIconButton>
         <ControlWrapper>

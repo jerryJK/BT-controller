@@ -37,7 +37,7 @@ export const Title = styled.h3`
 export const BluetoothIconButton = styled(IconButton)`
   && {
     margin: 30px;
-    color: white;
+    color: ${props => props.connected ? "#8db945" : "white"};
   }
 `
 
@@ -50,11 +50,12 @@ export const FullScreenIconButton = styled(IconButton)`
 
 export const LightsIconButton = styled(Fab)`
   && {
-    width: 44px;
+    width: 38px;
+    height: 30px;
     position: relative;
     left: 20%;
     top: 15%;
     background-color: white;
-    color: black;
+    color: ${props => props.lightsOn ? "#8db945" : "black"};
   }
 `
