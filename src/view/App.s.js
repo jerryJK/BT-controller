@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
@@ -34,7 +35,7 @@ export const Title = styled.h3`
   font-family:  'Lato', san-serif;
 `
 
-export const BluetoothIconButton = styled(IconButton)`
+export const BluetoothIconButton = styled(({connected, ...props }) => <IconButton {...props} />)`
   && {
     margin: 30px;
     color: ${props => props.connected ? "#8db945" : "white"};
@@ -48,14 +49,14 @@ export const FullScreenIconButton = styled(IconButton)`
   }
 `
 
-export const LightsIconButton = styled(Fab)`
+export const LightsIconButton = styled(({lights, ...props }) => <Fab {...props} />)`
   && {
-    width: 38px;
-    height: 30px;
-    position: relative;
-    left: 20%;
-    top: 15%;
-    background-color: white;
-    color: ${props => props.lightsOn ? "#8db945" : "black"};
+      color: ${props => props.lights ? "#8db945" : "black"};
+      width: 36px;
+      height: 30px;
+      position: relative;
+      left: 20%;
+      top: 15%;
+      background-color: white;
   }
 `

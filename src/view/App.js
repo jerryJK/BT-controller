@@ -15,7 +15,7 @@ class App extends Component {
     this.state = {
       connected: false,
       fullScreen: false,
-      lightsOn: false
+      lights: false
     }
   }
 
@@ -36,7 +36,7 @@ class App extends Component {
   }
 
   handleLightsButtonClick = () => {
-    this.setState({lightsOn: !this.state.lightsOn})
+    this.setState({lights: !this.state.lights})
   }
 
   render() {
@@ -55,9 +55,9 @@ class App extends Component {
           </FullScreenIconButton>
         </Header>
         <LightsIconButton 
-          lightsOn={this.state.lightsOn} 
+          lights={this.state.lights} 
           onClick={() => this.handleLightsButtonClick()}>
-          <LightsIcon fontSize="medium"  />
+          <LightsIcon fontSize="small"  />
         </LightsIconButton>
         <ControlWrapper>
           <RangeComponent/>
