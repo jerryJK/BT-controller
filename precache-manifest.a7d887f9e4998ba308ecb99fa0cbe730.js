@@ -8,19 +8,19 @@ self.__precacheManifest = [
     "url": "/BT-controller/static/js/runtime~main.ed4326a0.js"
   },
   {
-    "revision": "c41aa6887f23ebbcb78b",
-    "url": "/BT-controller/static/js/main.c41aa688.chunk.js"
+    "revision": "97a75179da412b3242f8",
+    "url": "/BT-controller/static/js/main.97a75179.chunk.js"
   },
   {
     "revision": "086c92b6fed06aff86a9",
     "url": "/BT-controller/static/js/1.086c92b6.chunk.js"
   },
   {
-    "revision": "c41aa6887f23ebbcb78b",
+    "revision": "97a75179da412b3242f8",
     "url": "/BT-controller/static/css/main.b66621b2.chunk.css"
   },
   {
-    "revision": "e7c6e3b269451136b770f25ce112c669",
+    "revision": "d433d80c8cb771b36bc3852dc689cc9a",
     "url": "/BT-controller/index.html"
   }
 ];
