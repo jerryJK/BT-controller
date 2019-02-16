@@ -46,16 +46,14 @@ class App extends Component {
   }
 
   handleLightsButtonClick = () => {
-    const lightsVolt = this.state.lights ? 0 : 255;
-    this.state.sbrick.drive( 0x00, this.state.sbrick.CW, lightsVolt )
+    const lightsPower = this.state.lights ? 0 : 255;
+    this.state.sbrick.drive( 0x00, this.state.sbrick.CW, lightsPower )
     this.setState({lights: !this.state.lights})
   }
 
   render() {
-    console.log(this.state.sbrick.isON)
     return (
       <AppContainer>
-        <button onClick={() => console.log(this.state.sbrick.isON) }>test</button>
         <Header>
           <BluetoothIconButton 
             connected={this.state.connected} 
@@ -74,8 +72,8 @@ class App extends Component {
           <LightsIcon fontSize="small"  />
         </LightsIconButton>
         <ControlWrapper>
-          <RangeComponent/>
-          <RangeComponent/>
+          <RangeComponent sbrick={this.state.sbrick} left />
+          <RangeComponent sbrick={this.state.sbrick} right />
         </ControlWrapper>
       </AppContainer>
     );

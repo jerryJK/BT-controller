@@ -88,7 +88,7 @@ export const SBrick = (function()  {
 	// Sbrick class definition
 	class SBrick {
 
-		// CONSTRUCTOR
+		// CONSTRUCTOR	
 
 		/**
 		* Create a new instance of the SBrick class (and accordingly also WebBluetooth)
@@ -124,6 +124,8 @@ export const SBrick = (function()  {
 
 			// debug
 			this._debug         = false;
+
+			this.MIN = '288'
 		}
 
 
