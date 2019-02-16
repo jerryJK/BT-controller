@@ -52,11 +52,11 @@ export const FullScreenIconButton = styled(IconButton)`
 export const LightsIconButton = styled(({lights, ...props }) => <Fab {...props} />)`
   && {
       color: ${props => props.lights ? "#8db945" : "black"};
-      width: 45px;
-      height: 55px;
+      width: 38px;
+      height: 50px;
       position: relative;
-      left: 15%;
-      top: 5%;
+      left: 18%;
+      top: 3%;
       background-color: white;
   }
 `
