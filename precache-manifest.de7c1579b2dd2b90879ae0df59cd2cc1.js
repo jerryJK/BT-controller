@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "/BT-controller/static/css/main.b66621b2.chunk.css"
   },
   {
-    "revision": "d433d80c8cb771b36bc3852dc689cc9a",
+    "revision": "718a913d424deffa49a4de823ccb258e",
     "url": "/BT-controller/index.html"
   }
 ];
