@@ -133,7 +133,7 @@ export const SBrick = (function()  {
 		* Open the Web Bluetooth popup to search and connect the SBrick (filtered by name if previously specified)
 		* @returns {promise returning undefined}
 		*/
-		connect() {
+		connect(setConnection) {
 			this.SERVICES = {
 				[UUID_SERVICE_DEVICEINFORMATION] : {
 					name : "Device Information",
@@ -186,6 +186,7 @@ export const SBrick = (function()  {
 			}
 			return this.webbluetooth.connect(options,this.SERVICES)
 			.then( () => {
+				setConnection(true);
 				if( this.isConnected() ) {
 					if( this._debug ) {
 						this._log( "Connected to SBrick " + this.webbluetooth.device.id );
@@ -199,6 +200,7 @@ export const SBrick = (function()  {
 						} else {
 							this._error("Firmware not compatible: please update your SBrick.");
 							this.disconnect();
+							setConnection(false);
 						}
 					});
 				}
@@ -206,11 +208,12 @@ export const SBrick = (function()  {
 			.catch( e => { this._error(e) } );
 		}
 
+
 		/**
 		* Disconnect the SBrick
 		* @returns {promise returning undefined}
 		*/
-		disconnect() {
+		disconnect(setConnection) {
 			return new Promise( (resolve, reject) => {
 				if( this.isConnected() ) {
 					resolve();
@@ -221,6 +224,7 @@ export const SBrick = (function()  {
 				return this.stopAll()
 				.then( ()=> {
 					clearInterval( this.keepalive );
+					setConnection(false);
 					return this.webbluetooth.disconnect();
 				} );
 			} )
