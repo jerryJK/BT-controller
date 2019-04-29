@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import IconButton from '@material-ui/core/IconButton';
 import Fab from '@material-ui/core/Fab';
 
-export const AppContainer = styled.div`
-  height: 100vh;
-  box-sizing: border-box;
+export const Container = styled.div`
+  minHeight: 100vh;
+  padding: 20px;
   display: flex;
-  align-items: center;
+  justify-content: flex-start;
   flex-direction: column;
 `
 

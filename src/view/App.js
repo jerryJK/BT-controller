@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import { SBrick } from '../lib/sbrick';
-import { AppContainer, ControlWrapper, Title, Header, BluetoothIconButton, FullScreenIconButton, LightsIconButton } from './App.s';
-import { RangeComponent } from '../components/RangeController/RangeController'; 
-import BluetoothIcon from '@material-ui/icons/Bluetooth';
-import BluetoothConnectedIcon from '@material-ui/icons/BluetoothConnected';
-import FullScreenIcon from '@material-ui/icons/Fullscreen';  
-import FullScreenExitIcon from '@material-ui/icons/FullscreenExit'; 
-import LightsIcon from '@material-ui/icons/WbSunny';
-import { fullScreen } from '../utils/fullscreen';
+import Button from '@material-ui/core/Button';
+import { Container } from './App.s';
 
 class App extends Component {
 
@@ -15,74 +8,110 @@ class App extends Component {
     super(props);
     this.state = {
       connected: false,
-      fullScreen: false,
-      lightsOn: false,
-      leftMotorPower: 0,
-      rightMotorPower: 0,
-      sbrick: new SBrick(),
+      device: null,
+      gattServer: null
     }
-    this.MIN_POWER = 0
-    this.MAX_POWER = 255
-    this.PORT = 0x00
-    this.CW = 0x00
+    this.UUID_SERVICE_REMOTECONTROL = "4dc591b0-857c-41de-b5f1-15abda665b0c";
+    this.UUID_CHARACTERISTIC_REMOTECONTROL = "02b8cbcc-0e25-4bda-8790-a15f53e6010f";
   }
 
-  setConnect = (val) => {
-    this.setState({connected: val})
+
+  connectDevice = () => {
+    const options = {
+      acceptAllDevices: true
+    }
+    navigator.bluetooth.requestDevice(options)
+    .then(device => {
+      this.setState({device: device})
+      console.log('Connecting to GATT Server...');
+      return device.gatt.connect();
+    })
+    .then(server => {
+      console.log('> Connected:        ' + server.connected);
+      this.setState({connected: server.connected, gattServer: server})
+    })
+    .catch(error => {
+      console.log('Argh! ' + error);
+    });
   }
 
-  getBluetoothButton = () => {
-    return this.state.connected ? <BluetoothConnectedIcon /> : <BluetoothIcon />
+  getDeviceInfo = () => {
+    console.log('> Name:             ' + this.state.device.name);
+    console.log('> Id:               ' + this.state.device.id);
+    console.log('> Connected:        ' + this.state.device.gatt.connected);
+}
+
+  getGattServerInfo = () => {
+    console.log(this.state.gattServer)
   }
 
-  getFullScreenButton = () => {
-    return this.state.fullScreen ? <FullScreenExitIcon /> : <FullScreenIcon />
+  getRemoteControlCharacteristics = () => {
+    console.log('Getting Service...');
+    this.state.gattServer.getPrimaryService(this.UUID_SERVICE_REMOTECONTROL)
+    .then(service => {
+      console.log(service)
+      console.log('Getting Characteristics...');
+      if (this.UUID_CHARACTERISTIC_REMOTECONTROL) {
+        // Get all characteristics that match this UUID.
+        return service.getCharacteristics(this.UUID_CHARACTERISTIC_REMOTECONTROL);
+      }
+      // Get all characteristics.\
+      return service.getCharacteristics();
+    })
+    .then(characteristics => {
+      console.log(characteristics)
+    })
+    .catch(error => {
+      console.log('Argh! ' + error);
+    });
   }
 
-  handleBluetoothButtonClick = () => {
-    this.state.connected 
-    ? this.state.sbrick.disconnect(this.setConnect) 
-    : this.state.sbrick.connect(this.setConnect)
+  writeValue1 = (value) => {
+    this.state.gattServer.getPrimaryService(this.UUID_SERVICE_REMOTECONTROL)
+    .then(service => {
+      return service.getCharacteristics(this.UUID_CHARACTERISTIC_REMOTECONTROL);
+    })
+    .then(characteristics => {
+      characteristics[0].writeValue(
+        new Uint8Array([ 0x01, 0x00, 0x00, value ]));
+    })
+    .catch(error => {
+      console.log('Argh! ' + error);
+    });
   }
 
-  handleFullScreenButtonClick = () => {
-    fullScreen(this.state.fullScreen)
-    this.setState({fullScreen: !this.state.fullScreen})
+  writeValue2 = (value) => {
+    this.state.gattServer.getPrimaryService(this.UUID_SERVICE_REMOTECONTROL)
+    .then(service => {
+      return service.getCharacteristics(this.UUID_CHARACTERISTIC_REMOTECONTROL);
+    })
+    .then(characteristics => {
+      characteristics[0].writeValue(
+        new Uint8Array([ 0x01, 0x03, 0x00, value ]));
+    })
+    .catch(error => {
+      console.log('Argh! ' + error);
+    });
   }
 
-  handleLightsButtonClick = () => {
-    const lightsPower = this.state.lightsOn ? this.MIN_POWER : this.MAX_POWER;
-    this.state.sbrick.drive( this.PORT, this.CW, lightsPower )
-    this.setState({lightsOn: !this.state.lightsOn})
+  disconnectDevice = () => {
+    this.state.gattServer.disconnect()
+    this.setState({connected: this.state.device.connected})
   }
 
   render() {
-    const { sbrick, connected, lightsOn } = this.state;
 
     return (
-      <AppContainer>
-        <Header>
-          <BluetoothIconButton 
-            connected={connected} 
-            onClick={this.handleBluetoothButtonClick} >
-            {this.getBluetoothButton()  }
-          </BluetoothIconButton>
-          <Title>Lego Controller</Title>
-          <FullScreenIconButton 
-            onClick={this.handleFullScreenButtonClick}>
-            {this.getFullScreenButton()}
-          </FullScreenIconButton>
-        </Header>
-        <LightsIconButton 
-          lightsOn={lightsOn} 
-          onClick={this.handleLightsButtonClick}>
-          <LightsIcon fontSize="small"  />
-        </LightsIconButton>
-        <ControlWrapper>
-          <RangeComponent sbrick={sbrick} left />
-          <RangeComponent sbrick={sbrick} right />
-        </ControlWrapper>
-      </AppContainer>
+      <Container>
+        {this.state.connected && 'connected'}
+        <Button color="primary" onClick={this.connectDevice}>Connect</Button>
+        <Button color="primary" onClick={this.getDeviceInfo}>Device info</Button>
+        <Button color="primary" onClick={this.getGattServerInfo}>Gatt Server</Button>
+        <Button color="primary" onClick={this.getRemoteControlCharacteristics}>service & characteristic</Button>
+        <Button color="primary" onClick={() => this.writeValue1(255)}>write value1</Button>
+        <Button color="primary" onClick={() => this.writeValue2(255)}>write value2</Button>
+        <Button color="primary" onClick={this.disconnectDevice}>Disconnect</Button>
+      </Container>
     );
   }
 }
