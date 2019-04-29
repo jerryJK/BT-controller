@@ -9,7 +9,6 @@ import FullScreenExitIcon from '@material-ui/icons/FullscreenExit';
 import LightsIcon from '@material-ui/icons/WbSunny';
 import { fullScreen } from '../utils/fullscreen';
 
-
 class App extends Component {
 
   constructor(props) {
@@ -17,11 +16,15 @@ class App extends Component {
     this.state = {
       connected: false,
       fullScreen: false,
-      lights: false,
-      leftMotor: 0,
-      rightMotor: 0,
+      lightsOn: false,
+      leftMotorPower: 0,
+      rightMotorPower: 0,
       sbrick: new SBrick(),
     }
+    this.MIN_POWER = 0
+    this.MAX_POWER = 255
+    this.PORT = 0x00
+    this.CW = 0x00
   }
 
   setConnect = (val) => {
@@ -29,15 +32,17 @@ class App extends Component {
   }
 
   getBluetoothButton = () => {
-    return !!this.state.connected ? <BluetoothConnectedIcon /> : <BluetoothIcon />
+    return this.state.connected ? <BluetoothConnectedIcon /> : <BluetoothIcon />
   }
 
-  getFullScrennButton = () => {
-    return this.state.fullScreen ?  <FullScreenExitIcon /> : <FullScreenIcon />
+  getFullScreenButton = () => {
+    return this.state.fullScreen ? <FullScreenExitIcon /> : <FullScreenIcon />
   }
 
   handleBluetoothButtonClick = () => {
-    !!this.state.connected ? this.state.sbrick.disconnect(this.setConnect) : this.state.sbrick.connect(this.setConnect)
+    this.state.connected 
+    ? this.state.sbrick.disconnect(this.setConnect) 
+    : this.state.sbrick.connect(this.setConnect)
   }
 
   handleFullScreenButtonClick = () => {
@@ -46,34 +51,36 @@ class App extends Component {
   }
 
   handleLightsButtonClick = () => {
-    const lightsPower = this.state.lights ? 0 : 255;
-    this.state.sbrick.drive( 0x00, this.state.sbrick.CW, lightsPower )
-    this.setState({lights: !this.state.lights})
+    const lightsPower = this.state.lightsOn ? this.MIN_POWER : this.MAX_POWER;
+    this.state.sbrick.drive( this.PORT, this.CW, lightsPower )
+    this.setState({lightsOn: !this.state.lightsOn})
   }
 
   render() {
+    const { sbrick, connected, lightsOn } = this.state;
+
     return (
       <AppContainer>
         <Header>
           <BluetoothIconButton 
-            connected={this.state.connected} 
-            onClick={() => this.handleBluetoothButtonClick()} >
-            { this.getBluetoothButton() }
+            connected={connected} 
+            onClick={this.handleBluetoothButtonClick} >
+            {this.getBluetoothButton()  }
           </BluetoothIconButton>
           <Title>Lego Controller</Title>
           <FullScreenIconButton 
-            onClick={() => this.handleFullScreenButtonClick()}>
-            { this.getFullScrennButton() }
+            onClick={this.handleFullScreenButtonClick}>
+            {this.getFullScreenButton()}
           </FullScreenIconButton>
         </Header>
         <LightsIconButton 
-          lights={this.state.lights} 
-          onClick={() => this.handleLightsButtonClick()}>
+          lightsOn={lightsOn} 
+          onClick={this.handleLightsButtonClick}>
           <LightsIcon fontSize="small"  />
         </LightsIconButton>
         <ControlWrapper>
-          <RangeComponent sbrick={this.state.sbrick} left />
-          <RangeComponent sbrick={this.state.sbrick} right />
+          <RangeComponent sbrick={sbrick} left />
+          <RangeComponent sbrick={sbrick} right />
         </ControlWrapper>
       </AppContainer>
     );

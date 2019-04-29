@@ -49,9 +49,9 @@ export const FullScreenIconButton = styled(IconButton)`
   }
 `
 
-export const LightsIconButton = styled(({lights, ...props }) => <Fab {...props} />)`
+export const LightsIconButton = styled(({lightsOn, ...props }) => <Fab {...props} />)`
   && {
-      color: ${props => props.lights ? "#8db945" : "black"};
+      color: ${props => props.lightsOn ? "#8db945" : "black"};
       width: 38px;
       height: 50px;
       position: relative;
