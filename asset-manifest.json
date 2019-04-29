@@ -1,14 +1,14 @@
 {
   "main.css": "/BT-controller/static/css/main.b66621b2.chunk.css",
-  "main.js": "/BT-controller/static/js/main.97a75179.chunk.js",
-  "main.js.map": "/BT-controller/static/js/main.97a75179.chunk.js.map",
-  "static/js/1.086c92b6.chunk.js": "/BT-controller/static/js/1.086c92b6.chunk.js",
-  "static/js/1.086c92b6.chunk.js.map": "/BT-controller/static/js/1.086c92b6.chunk.js.map",
+  "main.js": "/BT-controller/static/js/main.75dfd096.chunk.js",
+  "main.js.map": "/BT-controller/static/js/main.75dfd096.chunk.js.map",
+  "static/js/1.77c9f45f.chunk.js": "/BT-controller/static/js/1.77c9f45f.chunk.js",
+  "static/js/1.77c9f45f.chunk.js.map": "/BT-controller/static/js/1.77c9f45f.chunk.js.map",
   "runtime~main.js": "/BT-controller/static/js/runtime~main.ed4326a0.js",
   "runtime~main.js.map": "/BT-controller/static/js/runtime~main.ed4326a0.js.map",
   "static/media/index.css": "/BT-controller/static/media/background.34d5ba1c.jpg",
   "static/css/main.b66621b2.chunk.css.map": "/BT-controller/static/css/main.b66621b2.chunk.css.map",
   "index.html": "/BT-controller/index.html",
-  "precache-manifest.de7c1579b2dd2b90879ae0df59cd2cc1.js": "/BT-controller/precache-manifest.de7c1579b2dd2b90879ae0df59cd2cc1.js",
+  "precache-manifest.a1307c8f644e50f5e59ec4e551a83d45.js": "/BT-controller/precache-manifest.a1307c8f644e50f5e59ec4e551a83d45.js",
   "service-worker.js": "/BT-controller/service-worker.js"
 }
